@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResQCare - Select Account</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Open Sans',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+    url('https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg');
+    background-size:cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+}
+
+/* CONTAINER */
+.container{
+    text-align:center;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+p{
+    margin-bottom:30px;
+    opacity:0.8;
+}
+
+/* BUTTON GRID */
+.button-group{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+/* CARD BUTTON */
+.card{
+    width:200px;
+    height:180px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border-radius:15px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:0.3s;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+/* ICON */
+.card i{
+    font-size:2.5rem;
+    margin-bottom:10px;
+    color:#ff2e2e;
+}
+
+/* TEXT */
+.card h2{
+    font-size:1.2rem;
+}
+
+/* HOVER EFFECT */
+.card:hover{
+    transform:translateY(-8px) scale(1.05);
+    box-shadow: 0 0 20px rgba(255,0,0,0.6);
+}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+    .card{
+        width:100%;
+        max-width:300px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1><i class="fa-solid fa-heart-pulse"></i> ResQCare</h1>
+    <p>Select your account type to continue</p>
+
+    <div class="button-group">
+
+        <!-- BUYER -->
+        <div class="card" onclick="goBuyer()">
+            <i class="fa-solid fa-user"></i>
+            <h2>Buyer Account</h2>
+        </div>
+
+        <!-- SELLER -->
+        <div class="card" onclick="goSeller()">
+            <i class="fa-solid fa-store"></i>
+            <h2>Seller Account</h2>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function goBuyer(){
+    window.location.href = "buyer.html"; // or buyer page
+}
+
+function goSeller(){
+    window.location.href = "seller.html"; // create later
+}
+</script>
+
+</body>
+</html>

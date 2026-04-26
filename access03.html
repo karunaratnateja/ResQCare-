@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Appointment</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Open Sans',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+    url('https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg');
+    background-size:cover;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+/* CONTAINER */
+.container{
+    width:100%;
+    max-width:500px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding:25px;
+    border-radius:15px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* INPUT GROUP */
+.input-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    outline:none;
+}
+
+/* AVAILABILITY */
+.availability{
+    margin-top:10px;
+    padding:10px;
+    background: rgba(0,0,0,0.4);
+    border-radius:8px;
+}
+
+/* BUTTON */
+.btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    background: linear-gradient(135deg, #ff2e2e, #c40000);
+    color:#fff;
+    font-size:1.1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 5px 20px rgba(255,0,0,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Doctor Appointment</h1>
+
+    <!-- AREA -->
+    <div class="input-group">
+        <label>Enter Area / Region</label>
+        <input type="text" placeholder="Enter your location">
+    </div>
+
+    <!-- SPECIALIZATION -->
+    <div class="input-group">
+        <label>Select Specialization</label>
+        <select id="specialization">
+            <option value="">-- Select --</option>
+            <option value="cardio">Cardiologist</option>
+            <option value="general">General Physician</option>
+            <option value="ortho">Orthopedic</option>
+            <option value="neuro">Neurologist</option>
+        </select>
+    </div>
+
+    <!-- DOCTOR -->
+    <div class="input-group">
+        <label>Select Doctor</label>
+        <select id="doctor">
+            <option value="">-- Select doctor --</option>
+        </select>
+
+        <div class="availability">
+            Available Slots: <strong id="slots">--</strong>
+        </div>
+    </div>
+
+    <!-- DATE -->
+    <div class="input-group">
+        <label>Select Date</label>
+        <input type="date">
+    </div>
+
+    <!-- TIME -->
+    <div class="input-group">
+        <label>Select Time</label>
+        <input type="time">
+    </div>
+
+    <!-- PATIENT NAME -->
+    <div class="input-group">
+        <label>Patient Name</label>
+        <input type="text" placeholder="Enter name">
+    </div>
+
+    <!-- CONTACT -->
+    <div class="input-group">
+        <label>Mobile Number</label>
+        <input type="tel" placeholder="Enter phone number">
+    </div>
+
+    <!-- BUTTON -->
+    <button class="btn">
+        <i class="fa-solid fa-user-doctor"></i> Book Appointment
+    </button>
+</div>
+
+<script>
+// Doctor data
+const doctors = {
+    cardio: [
+        {name: "Dr. Reddy", slots: 5},
+        {name: "Dr. Sharma", slots: 3}
+    ],
+    general: [
+        {name: "Dr. Kumar", slots: 8},
+        {name: "Dr. Mehta", slots: 6}
+    ],
+    ortho: [
+        {name: "Dr. Singh", slots: 4}
+    ],
+    neuro: [
+        {name: "Dr. Rao", slots: 2}
+    ]
+};
+
+const specialization = document.getElementById("specialization");
+const doctorSelect = document.getElementById("doctor");
+const slotsDisplay = document.getElementById("slots");
+
+// Update doctors based on specialization
+specialization.addEventListener("change", function(){
+    const value = this.value;
+
+    doctorSelect.innerHTML = '<option value="">-- Select Doctor --</option>';
+
+    if(doctors[value]){
+        doctors[value].forEach((doc, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = doc.name;
+            doctorSelect.appendChild(option);
+        });
+    }
+
+    slotsDisplay.textContent = "--";
+});
+
+// Show slots
+doctorSelect.addEventListener("change", function(){
+    const spec = specialization.value;
+    const index = this.value;
+
+    if(spec && doctors[spec][index]){
+        slotsDisplay.textContent = doctors[spec][index].slots;
+    } else {
+        slotsDisplay.textContent = "--";
+    }
+
+});
+
+// BOOK BUTTON
+const button = document.querySelector(".btn");
+
+button.addEventListener("click", function(){
+
+    const area = document.querySelector("input[type='text']").value;
+    const spec = specialization.value;
+    const doctorIndex = doctorSelect.value;
+    const date = document.querySelector("input[type='date']").value;
+    const time = document.querySelector("input[type='time']").value;
+    const name = document.querySelectorAll("input[type='text']")[1].value;
+    const phone = document.querySelector("input[type='tel']").value;
+
+    // VALIDATION
+    if(!area || !spec || !doctorIndex || !date || !time || !name || !phone){
+        alert("Please fill all fields!");
+        return;
+    }
+
+    // CHECK SLOT
+    if(doctors[spec][doctorIndex].slots <= 0){
+        alert("No slots available!");
+        return;
+    }
+
+    // BOOK SLOT
+    doctors[spec][doctorIndex].slots--;
+    slotsDisplay.textContent = doctors[spec][doctorIndex].slots;
+
+    alert("Appointment booked successfully! 🏥👨‍⚕️");
+});
+</script>
+
+</body>
+</html>

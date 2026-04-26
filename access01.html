@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Support</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Open Sans',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+    url('https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg');
+    background-size:cover;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+/* CONTAINER */
+.container{
+    width:100%;
+    max-width:500px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding:25px;
+    border-radius:15px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* INPUTS */
+.input-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    outline:none;
+}
+
+/* AVAILABILITY */
+.availability{
+    margin-top:10px;
+    padding:10px;
+    background: rgba(0,0,0,0.4);
+    border-radius:8px;
+}
+
+/* BUTTON */
+.btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    background: linear-gradient(135deg, #ff2e2e, #c40000);
+    color:#fff;
+    font-size:1.1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 5px 20px rgba(255,0,0,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Emergency Food Support</h1>
+
+    <!-- AREA -->
+    <div class="input-group">
+        <label>Enter Area / Region</label>
+        <input type="text" placeholder="Enter your location">
+    </div>
+
+    <!-- FOOD PROVIDER -->
+    <div class="input-group">
+        <label>Select Food Supplier</label>
+        <select id="supplier">
+            <option value="">-- Select Supplier --</option>
+            <option value="ngo">Local NGO Supply</option>
+            <option value="restaurant">Nearby Restaurant</option>
+            <option value="govt">Government Relief Center</option>
+            <option value="charity">Charity Food Service</option>
+        </select>
+
+        <div class="availability">
+            Available Meals: <strong id="meals">--</strong>
+        </div>
+    </div>
+
+    <!-- FOOD TYPE -->
+    <div class="input-group">
+        <label>Select Food Type</label>
+        <select>
+            <option>Rice Meal</option>
+            <option>Packaged Food</option>
+            <option>Drinking Water</option>
+            <option>Emergency Kit</option>
+        </select>
+    </div>
+
+    <!-- QUANTITY -->
+    <div class="input-group">
+        <label>Quantity Required</label>
+        <input type="number" min="1" placeholder="Enter quantity">
+    </div>
+
+    <!-- CONTACT -->
+    <div class="input-group">
+        <label>Mobile Number</label>
+        <input type="tel" placeholder="Enter phone number">
+    </div>
+
+    <!-- BUTTON -->
+    <button class="btn">
+        <i class="fa-solid fa-utensils"></i> Request / Buy Food
+    </button>
+</div>
+
+<script>
+// Fake availability data
+const supplierData = {
+    ngo: 50,
+    restaurant: 30,
+    govt: 100,
+    charity: 40
+};
+
+const supplier = document.getElementById("supplier");
+const meals = document.getElementById("meals");
+const button = document.querySelector(".btn");
+
+supplier.addEventListener("change", function(){
+    const value = this.value;
+
+    if(supplierData[value]){
+        meals.textContent = supplierData[value];
+    } else {
+        meals.textContent = "--";
+    }
+});
+
+// BUTTON CLICK FUNCTION
+button.addEventListener("click", function(){
+
+    const area = document.querySelector("input[type='text']").value;
+    const supplierValue = supplier.value;
+    const quantity = document.querySelector("input[type='number']").value;
+    const phone = document.querySelector("input[type='tel']").value;
+
+    // VALIDATION
+    if(!area || !supplierValue || !quantity || !phone){
+        alert("Please fill all fields!");
+        return;
+    }
+
+    if(quantity > supplierData[supplierValue]){
+        alert("Requested quantity exceeds available meals!");
+        return;
+    }
+
+    // SIMULATED BOOKING
+    supplierData[supplierValue] -= quantity;
+    meals.textContent = supplierData[supplierValue];
+
+    alert("Food request successful! Help is on the way 🚑🍱");
+
+});
+</script>
+
+</body>
+</html>

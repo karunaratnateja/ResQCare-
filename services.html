@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResQCare Services</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Open Sans',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+    url('https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg');
+    background-size:cover;
+    background-position:center;
+    color:#fff;
+}
+
+/* NAVBAR */
+header{
+    padding:0 2rem;
+}
+
+.navbar{
+    height:60px;
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo a{
+    font-size:2rem;
+    font-weight:bold;
+    color:#fff;
+    text-decoration:none;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+/* SERVICES SECTION */
+.services{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.services h1{
+    font-size:2.5rem;
+    margin-bottom:10px;
+}
+
+.services p{
+    opacity:0.8;
+    margin-bottom:40px;
+}
+
+/* CARD CONTAINER */
+.service-container{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+/* SERVICE CARD */
+.service-card{
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding:30px;
+    border-radius:15px;
+    width:280px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.service-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 10px 30px rgba(255,0,0,0.4);
+}
+
+/* ICON */
+.service-card i{
+    font-size:40px;
+    margin-bottom:15px;
+    color:#ff2e2e;
+}
+
+/* TITLE */
+.service-card h3{
+    margin-bottom:10px;
+}
+
+/* BUTTON */
+.service-btn{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;
+    background: linear-gradient(135deg, #ff2e2e, #c40000);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.service-btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 5px 20px rgba(255,0,0,0.6);
+}
+
+/* RESPONSIVE */
+@media (max-width:768px){
+    .services h1{
+        font-size:2rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+        <div class="logo">
+            <a>ResQCare</a>
+        </div>
+    </div>
+</header>
+
+<section class="services">
+    <h1>Our Services</h1>
+    <p>Quick access to essential emergency support services</p>
+
+    <div class="service-container">
+
+        <!-- Emergency Bed -->
+        <div class="service-card">
+            <i class="fa-solid fa-bed"></i>
+            <h3>Emergency Bed</h3>
+            <p>Find available hospital beds instantly during emergencies.</p>
+           <button class="service-btn"><a href="booknow.html">Access</a></button>
+        </div>
+
+         <!-- doctor appointment -->
+        <div class="service-card">
+         <i class="fa-solid fa-user-doctor"></i>
+            <h3>Doctor Appointment</h3>
+            <p>Quick and easy appointment booking available.</p>
+                       <button class="service-btn"><a href="access03.html">Access</a></button>
+
+        </div>
+
+        <!-- Food -->
+        <div class="service-card">
+            <i class="fa-solid fa-utensils"></i>
+            <h3>Food</h3>
+            <p>Get emergency food support and nearby supply information.</p>
+                       <button class="service-btn">
+                        <a href="access01.html">Access</a></button>
+
+        </div>
+
+        <!-- Fuel -->
+        <div class="service-card">
+            <i class="fa-solid fa-gas-pump"></i>
+            <h3>Fuel</h3>
+            <p>Emergency fuel delivery when you need it most.</p>
+                       <button class="service-btn"><a href="access02.html">Access</a></button>
+        </div>
+
+
+
+    </div>
+</section>
+
+</body>
+</html>
+ 

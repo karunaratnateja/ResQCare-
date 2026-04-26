@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResQCare Fuel Support</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Open Sans',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+    url('https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg');
+    background-size:cover;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding:25px;
+    border-radius:15px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    outline:none;
+}
+
+/* CARD */
+.card{
+    background: rgba(255,255,255,0.05);
+    padding:12px;
+    border-radius:10px;
+    margin-top:10px;
+    border-left:4px solid #ff2e2e;
+}
+
+/* BUTTON */
+.btn{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:25px;
+    background: linear-gradient(135deg,#ff2e2e,#c40000);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px rgba(255,0,0,0.7);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1><i class="fa-solid fa-gas-pump"></i> Fuel Booking</h1>
+
+<!-- AREA -->
+<div class="input-group">
+<label>Enter Area</label>
+<input type="text" id="area">
+</div>
+
+<!-- FUEL TYPE -->
+<div class="input-group">
+<label>Fuel Type</label>
+<select id="fuelType">
+<option value="petrol">Petrol</option>
+<option value="diesel">Diesel</option>
+<option value="gas">Gas Cylinder</option>
+</select>
+</div>
+
+<!-- DATE -->
+<div class="input-group">
+<label>Select Date</label>
+<input type="date" id="date">
+</div>
+
+<!-- TIME -->
+<div class="input-group">
+<label>Select Time</label>
+<input type="time" id="time">
+</div>
+
+<!-- PROVIDERS -->
+<div id="providers"></div>
+
+<button class="btn" onclick="requestFuel()">
+<i class="fa-solid fa-truck"></i> Schedule Fuel
+</button>
+
+</div>
+
+<script>
+
+// Demo data with time-based availability
+const fuelData = [
+    {name:"Indian Oil", fuel:"petrol", morning:100, evening:50},
+    {name:"HP Fuel", fuel:"diesel", morning:80, evening:30},
+    {name:"Bharat Gas", fuel:"gas", morning:40, evening:20}
+];
+
+// SHOW BASED ON TIME
+function showProviders(){
+    const fuelType = document.getElementById("fuelType").value;
+    const time = document.getElementById("time").value;
+    const container = document.getElementById("providers");
+
+    container.innerHTML = "";
+
+    if(!time) return;
+
+    let hour = parseInt(time.split(":")[0]);
+
+    fuelData.forEach(f => {
+        if(f.fuel === fuelType){
+
+            let availability = hour < 12 ? f.morning : f.evening;
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+                <h3>${f.name}</h3>
+                <p>Available at selected time: ${availability} units</p>
+            `;
+
+            container.appendChild(card);
+        }
+    });
+}
+
+// Trigger on change
+document.getElementById("fuelType").addEventListener("change", showProviders);
+document.getElementById("time").addEventListener("change", showProviders);
+
+// REQUEST
+function requestFuel(){
+    const area = document.getElementById("area").value;
+    const fuel = document.getElementById("fuelType").value;
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+
+    if(area && date && time){
+        alert(`Fuel booked for ${fuel} in ${area} on ${date} at ${time}`);
+    } else {
+        alert("Please fill all details");
+    }
+}
+
+</script>
+
+</body>
+</html>

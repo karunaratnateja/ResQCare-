@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResQCare Contact</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Open Sans',sans-serif;}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+    url('https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg');
+    background-size:cover;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.container{max-width:1100px;width:100%;}
+
+.title{text-align:center;margin-bottom:20px;}
+.title h1{
+    display:inline-block;
+    padding:10px 20px;
+    background:rgba(255,255,255,0.1);
+    border-radius:10px;
+}
+
+.contact-wrapper{display:flex;gap:30px;margin-top:30px;}
+
+.contact-info{flex:1;}
+.info-box{display:flex;align-items:center;margin-bottom:25px;}
+
+.icon{
+    width:60px;height:60px;background:#fff;color:#000;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    margin-right:15px;
+}
+
+.info-text h3{color:#00d4d4;}
+.info-text p{font-size:0.9rem;opacity:0.8;}
+
+.contact-form{
+    flex:1;background:#fff;color:#000;
+    padding:25px;border-radius:10px;
+}
+
+.input-box{margin-bottom:20px;}
+.input-box input,.input-box textarea{
+    width:100%;border:none;border-bottom:2px solid #333;
+    padding:8px;outline:none;
+}
+
+textarea{resize:none;height:80px;}
+
+button{
+    width:100%;padding:10px;border:none;border-radius:25px;
+    background:linear-gradient(135deg,#00c6c6,#008b8b);
+    color:#fff;cursor:pointer;
+}
+
+/* message */
+.message{
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+    display:none;
+}
+.success{background:#0f5132;color:#fff;}
+.error{background:#842029;color:#fff;}
+
+@media(max-width:900px){
+    .contact-wrapper{flex-direction:column;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="title">
+        <h1>Contact ResQCare</h1>
+    </div>
+
+    <div class="contact-wrapper">
+
+        <!-- LEFT -->
+        <div class="contact-info">
+
+            <div class="info-box">
+                <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="info-text">
+                    <h3>Address</h3>
+                    <p> Andhra Pradesh, India</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="info-text">
+                    <h3>Phone</h3>
+                    <p>+91 9876543210</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+                <div class="info-text">
+                    <h3>Email</h3>
+                    <p>support@resqcare.in</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="contact-form">
+            <h2>Send Message</h2>
+
+            <form id="contactForm">
+
+                <div class="input-box">
+                    <input type="text" id="name" placeholder="Full Name">
+                </div>
+
+                <div class="input-box">
+                    <input type="tel" id="phone" placeholder="Mobile Number">
+                </div>
+
+                <div class="input-box">
+                    <input type="email" id="email" placeholder="Email">
+                </div>
+
+                <div class="input-box">
+                    <textarea id="message" placeholder="Type your message..."></textarea>
+                </div>
+
+                <!-- Emergency toggle -->
+                <div class="input-box">
+                    <label>
+                        <input type="checkbox" id="urgent"> 🚨 Mark as Emergency
+                    </label>
+                </div>
+
+                <button type="submit">Send</button>
+
+                <div id="msg" class="message"></div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const form = document.getElementById("contactForm");
+
+function showMessage(text, type){
+    const msg = document.getElementById("msg");
+    msg.style.display = "block";
+    msg.className = "message " + type;
+    msg.textContent = text;
+}
+
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+    const urgent = document.getElementById("urgent").checked;
+
+    const phonePattern = /^[6-9]\d{9}$/;
+
+    if(!name || !phone || !email || !message){
+        showMessage("⚠️ Please fill all fields", "error");
+        return;
+    }
+
+    if(!phonePattern.test(phone)){
+        showMessage("❌ Enter valid 10-digit mobile number", "error");
+        return;
+    }
+
+    // Simulate sending (store locally)
+    const data = {
+        name, phone, email, message, urgent
+    };
+
+    localStorage.setItem("contact_"+Date.now(), JSON.stringify(data));
+
+    showMessage("✅ Message sent successfully!", "success");
+
+    form.reset();
+});
+</script>
+
+</body>
+</html>

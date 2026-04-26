@@ -1,0 +1,229 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body{
+    height: 100vh;
+    background-color: #000;
+    background-image: url(https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+}
+
+a:hover{
+    color: #e4a81a;
+}
+
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-size: 35px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+}
+
+header{
+    position: relative;
+    padding: 0 2rem;
+}
+
+.navbar{
+    width: 100%;
+    height: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .logo a{
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+}
+
+.navbar .links{
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar .toggle_btn{
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* hidden by default */
+}
+
+.action_btn{
+    background-color: rgb(216, 16, 16);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border:none;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: scale 0.2s ease;
+}
+
+.action_btn:hover{
+    color: #fff;
+    scale: 1.05;
+}
+
+.action_btn:active{
+    scale: 0.95;
+}
+
+.dropdown_menu {
+    display: none;
+    position: absolute;
+    right: 2rem;
+    top: 60px;
+    height: 0;
+    width: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: height .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown_menu.open{
+    height: 240px;
+}
+
+.dropdown_menu li{
+    padding: 0.7rem;
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown_menu .action_btn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.fixed_action_btn{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 90%;
+    max-width: 500px;
+    
+    background: linear-gradient(135deg, #ff2e2e, #c40000);
+    color: #fff;
+    
+    padding: 1rem;
+    border-radius: 40px;
+    
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
+    
+    cursor: pointer;
+    z-index: 1000;
+    
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.fixed_action_btn:hover{
+    color: #fff;
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 0, 0, 0.7);
+}
+
+/* Click Effect */
+.fixed_action_btn:active{
+    transform: translateX(-50%) scale(0.97);
+}
+
+/* Icon Style */
+.fixed_action_btn i{
+    font-size: 1.3rem;
+}
+
+
+
+/* 🔥 Pulse Animation (medical feel) */
+@keyframes pulseGlow {
+    0%{
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+    }
+    70%{
+        box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
+    }
+    100%{
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+}
+
+.fixed_action_btn{
+    animation: pulseGlow 2s infinite;
+}
+
+/* ✅ FIXED MEDIA QUERY */
+@media (max-width: 992px){
+    .navbar .links,
+    .navbar .action_btn{
+        display: none;
+    }
+
+    .navbar .toggle_btn{
+        display: block;
+    }
+
+    .dropdown_menu{
+        display: block;
+    }
+}
+
+/* ✅ FIXED MEDIA QUERY */
+@media (max-width: 576px){
+    .dropdown_menu{
+        left: 2rem;
+        width: unset;
+    }
+}
+
+@media (min-width: 993px){
+    .fixed_action_btn{
+        display: none;
+    }
+}
+
+@media (max-width: 576px){
+    .navbar .logo a{
+        font-size: 1.6rem;
+    }
+}

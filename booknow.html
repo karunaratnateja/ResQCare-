@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResQCare Bed Booking</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Open Sans',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+    url('https://static.vecteezy.com/system/resources/previews/042/231/605/non_2x/heart-pulse-and-heartbeat-heartbeat-lone-cardiogram-beautiful-healthcare-medical-background-modern-simple-design-for-medical-apps-websites-and-hospital-design-vector.jpg');
+    background-size:cover;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:100%;
+    max-width:520px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    padding:25px;
+    border-radius:15px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    outline:none;
+}
+
+/* availability */
+.availability{
+    padding:12px;
+    background: rgba(255, 255, 255,0.08);
+    border-radius:8px;
+    text-align:center;
+    font-size:1.1rem;
+}
+
+/* message */
+.message{
+    margin-top:15px;
+    padding:10px;
+    border-radius:8px;
+    display:none;
+}
+
+.success{ background:#0f5132; }
+.error{ background:#842029; }
+
+/* button */
+.book-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    background: linear-gradient(135deg, #ff2e2e, #c40000);
+    color:#fff;
+    font-size:1.1rem;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1> Emergency Bed Booking</h1>
+
+    <!-- AREA -->
+    <div class="input-group">
+        <label>Select Area</label>
+        <select id="area">
+            <option value="">-- Select Area --</option>
+            <option value="hyderabad">Hyderabad</option>
+            <option value="vizag">Visakhapatnam</option>
+            <option value="vijayawada">Vijayawada</option>
+        </select>
+    </div>
+
+    <!-- HOSPITAL -->
+    <div class="input-group">
+        <label>Select Hospital</label>
+        <select id="hospital">
+            <option value="">-- Select Hospital --</option>
+        </select>
+    </div>
+
+    <!-- AVAILABILITY -->
+    <div class="availability">
+        Available Beds: <strong id="beds">--</strong>
+    </div>
+
+    <!-- BUTTON -->
+    <button class="book-btn" onclick="bookNow()">
+        <i class="fa-solid fa-bed"></i> Book Bed
+    </button>
+
+    <!-- MESSAGE -->
+    <div id="msg" class="message"></div>
+</div>
+
+<script>
+// Manual hospital database
+const hospitalData = {
+    hyderabad: [
+        {name: "Apollo Hospital", beds: 5},
+        {name: "Yashoda Hospital", beds: 3}
+    ],
+    vizag: [
+        {name: "Care Hospital", beds: 4},
+        {name: "KGH Hospital", beds: 6}
+    ],
+    vijayawada: [
+        {name: "Ramesh Hospital", beds: 2},
+        {name: "Andhra Hospital", beds: 5}
+    ]
+};
+
+let currentBeds = 0;
+
+// UI Elements
+const areaSelect = document.getElementById("area");
+const hospitalSelect = document.getElementById("hospital");
+const bedsDisplay = document.getElementById("beds");
+
+// Message function
+function showMessage(text, type){
+    const msg = document.getElementById("msg");
+    msg.style.display = "block";
+    msg.className = "message " + type;
+    msg.textContent = text;
+}
+
+// Load hospitals based on area
+areaSelect.addEventListener("change", function(){
+    const area = this.value;
+
+    hospitalSelect.innerHTML = '<option value="">-- Select Hospital --</option>';
+    bedsDisplay.textContent = "--";
+
+    if(hospitalData[area]){
+        hospitalData[area].forEach((hosp, index)=>{
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = hosp.name;
+            hospitalSelect.appendChild(option);
+        });
+    }
+});
+
+// Show beds
+hospitalSelect.addEventListener("change", function(){
+    const area = areaSelect.value;
+    const index = this.value;
+
+    if(area && hospitalData[area][index]){
+        let stored = localStorage.getItem(area + index);
+
+        if(stored === null){
+            currentBeds = hospitalData[area][index].beds;
+            localStorage.setItem(area + index, currentBeds);
+        } else {
+            currentBeds = parseInt(stored);
+        }
+
+        bedsDisplay.textContent = currentBeds;
+    }
+});
+
+// Booking
+function bookNow(){
+    const area = areaSelect.value;
+    const index = hospitalSelect.value;
+
+    if(!area || !index){
+        showMessage("⚠️ Please select area and hospital", "error");
+        return;
+    }
+
+    if(currentBeds <= 0){
+        showMessage("❌ No beds available", "error");
+        return;
+    }
+
+    currentBeds--;
+    localStorage.setItem(area + index, currentBeds);
+    bedsDisplay.textContent = currentBeds;
+
+    showMessage("✅ Bed booked successfully!", "success");
+}
+</script>
+
+</body>
+</html>
